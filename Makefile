@@ -1,9 +1,9 @@
 all: build
 .PHONY: all build
 
-BINARY_NAME := helloworld
-BUILD_IMAGE ?= test/helloworld
-PUSH_IMAGE ?= test/helloworld:v1.0.0
+BINARY_NAME := start_node
+BUILD_IMAGE ?= test/start_node
+PUSH_IMAGE ?= test/start_node:v1.0.0
 
 VERSION := $(shell git rev-parse --short HEAD)
 BUILDTIME := $(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
@@ -28,6 +28,9 @@ coverage:
 
 test: 
 	@cd pkg/helloworld; go test -v --race
+	@cd pkg/prodcons; go test -v --race
+	@cd pkg/node; go test -v --race
+	@cd pkg/gossip; go test -v --race
 
 install:
 	cp ./bin/$(BINARY_NAME) /usr/local/bin
